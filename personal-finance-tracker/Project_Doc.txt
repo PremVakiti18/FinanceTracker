@@ -1,0 +1,39 @@
+Eureka Server :
+pom.xml -> added dependency details like spring boot stater, service discovery, maven plugins, eureka Netflix server
+application.yml -> server details  port : 8761 for eureka
+EurekaServerApplication.java -> SpringBoot Application 
+
+User-Service :
+pom.xml -< Springboot starter, Spring Web, JWT, Eureka, Maven, Security
+User.java -> Username, emailId, password, firstname, lastname, phn number.
+UserRepository -> Connected to DB through JPA repo ( findBy Username/EmailId, existBy Username/EmailId )
+UserServicer -> JWTTokenPRovider, AuthenticationManager, PasswordEncoder & methods like (registerUser, loginUser)
+DTO -> For Validations -> Login, Register Pages & Storing UserResponse.
+Security -> JWTTokenPRovider.java contains getSigningKet, generateToken (taking UserName & expiryTime), validateToken, getUsernamefromToken
+UserController -> Controller methods like Register/Login User, GetUserBy ID/Username
+application.yml -> UserService, sqlDriver, JDBC connect, dialect, jwt sercret key & expiration(24H)
+SecurityConfig.java
+CustomUserDetailsService.java -> 
+
+
+Transaction Management Service :
+pom.xml -> SpringBoot starter, web, JPA, Eureka, mysql-connector,Springboot cloud
+Transaction.java -> Id , UserId,Amount,Description, transactionType,Category, transactionDate, paymentMethod, tags, createdAt,updatedAt attributes added.
+TransactionRequest.java -> amount, description, transactionType, Category, transactionDate, paymentMethod, tags.
+TransactionResponse.java -> Id , UserId,Amount,Description, transactionType,Category, transactionDate, paymentMethod, tags, createdAt,updatedAt.
+TransactionRepository.java -> extends JPA using the findBy UserID/& Category.
+TransactionService.java -> added methods like createTransaction, getUserTransactions, getTransactionById, updateTransaction, deleteTransaction, getTransactionSummary, convertToResponse, 
+
+Budget-Management-Service :
+Budget.java -> Id, UserId,Amount,Category, spent,startDate,endDate,status (BudgetStatus).
+BudgetController.java -> create/update/delete Budget, getBudgetByUserId, updateBudgetBySpent
+BudgetService.java -> create/update/delete Budget, getBudgetByUserId, updateBudgetBySpent
+BudgetRepository.java -> extends JPA has findByUserId & findByUserIdAndCategory methods.
+
+Notification-Management-Service :
+Notification.java -> Id,UserID, Title, messgae, type(Notification Type), read, createdAt.
+Contoller -> createNotification, getNotification/getUnreadNotification ByUserId, getUnreadCount,markAsRead, markAllAsRead.
+Service -> createNotification, getNotification/getUnreadNotification ByUserId, getUnreadCount,markAsRead, markAllAsRead & sendBudgetExceededAlert.
+Repository -> extends JPA, findByUserIdOrderByCreatedAtDesc, findByUserIdAndReadFalseOrderByCreatedAtDesc, countByUserIdAndReadFalse
+
+
